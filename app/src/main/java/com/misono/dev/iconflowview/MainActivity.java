@@ -46,7 +46,7 @@ public class MainActivity extends AppCompatActivity {
 
     RecyclerView recyclerView;
     LinearLayoutManager linearLayoutManager;
-    int shadowHeightPx;
+//    int shadowHeightPx;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,7 +54,7 @@ public class MainActivity extends AppCompatActivity {
         Fresco.initialize(this);
         setContentView(R.layout.activity_main);
 
-        shadowHeightPx = getResources().getDimensionPixelSize(R.dimen.shadowHeight);
+//        shadowHeightPx = getResources().getDimensionPixelSize(R.dimen.shadowHeight);
         headerWrapper = new HeaderWrapper();
         headerWrapper.init(this);
         headerWrapper.gone();
@@ -93,7 +93,7 @@ public class MainActivity extends AppCompatActivity {
             View firstView = linearLayoutManager.findViewByPosition(firstItem);
             int firstViewHeight = firstView.getHeight();
             int top = firstView.getTop();
-            int offset = firstViewHeight - headerWrapper.height() - shadowHeightPx;
+            int offset = firstViewHeight - headerWrapper.height() - 0;
             int headerTop = Math.min(0, top + offset);
             headerWrapper.move(headerTop);
         }
