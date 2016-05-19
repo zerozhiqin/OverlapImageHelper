@@ -1,8 +1,12 @@
 package com.misono.dev.iconflowview;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.widget.FrameLayout;
-import android.widget.ImageView;
+
+import com.facebook.drawee.generic.GenericDraweeHierarchyBuilder;
+import com.facebook.drawee.generic.RoundingParams;
+import com.facebook.drawee.view.SimpleDraweeView;
 
 public class OverlapImageHelper {
 
@@ -24,8 +28,13 @@ public class OverlapImageHelper {
         int imgSizePx = (int) (density * imgSizeDp + .5f);
 
         for (int i = count - 1; i >= 0; i--) {
-            ImageView imageView = new ImageView(context);
-            imageView.setScaleType(ImageView.ScaleType.FIT_XY);
+            SimpleDraweeView imageView = new SimpleDraweeView(context);
+            GenericDraweeHierarchyBuilder builder = new GenericDraweeHierarchyBuilder(context.getResources());
+            RoundingParams roundingParams = RoundingParams.asCircle();
+            roundingParams.setBorder(Color.WHITE, 8);
+            builder.setRoundingParams(roundingParams);
+            imageView.setHierarchy(builder.build());
+
             FrameLayout.LayoutParams flp = new FrameLayout.LayoutParams(imgSizePx, imgSizePx);
             flp.setMargins(i * (imgSizePx - coverSizePx), 0, 0, 0);
             frameLayout.addView(imageView, flp);
@@ -35,6 +44,6 @@ public class OverlapImageHelper {
 
 
     interface ImageProcessor {
-        void process(ImageView imageView, int position);
+        void process(SimpleDraweeView imageView, int position);
     }
 }

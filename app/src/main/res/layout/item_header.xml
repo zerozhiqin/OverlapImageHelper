@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="80dp"
+    android:background="#fff"
+    android:gravity="center_vertical"
+    android:orientation="horizontal"
+    android:padding="10dp">
+
+    <com.facebook.drawee.view.SimpleDraweeView
+        android:id="@+id/headerIcon"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        app:placeholderImage="@mipmap/ic_launcher"
+        app:roundAsCircle="true"
+        app:roundingBorderColor="#FFF"
+        app:roundingBorderWidth="4dp" />
+
+    <TextView
+        android:id="@+id/headerText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+</LinearLayout>
