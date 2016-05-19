@@ -13,6 +13,7 @@ import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import android.widget.TextView;
 
+import com.facebook.common.util.UriUtil;
 import com.facebook.drawee.backends.pipeline.Fresco;
 import com.facebook.drawee.view.SimpleDraweeView;
 
@@ -25,12 +26,20 @@ public class MainActivity extends AppCompatActivity {
             "http://img2.imgtn.bdimg.com/it/u=4248184023,1285925337&fm=21&gp=0.jpg",
             "http://img0.imgtn.bdimg.com/it/u=3488207672,3352446836&fm=21&gp=0.jpg",
             "http://img2.imgtn.bdimg.com/it/u=682499833,287859835&fm=21&gp=0.jpg",
-            "http://img0.imgtn.bdimg.com/it/u=1002389095,2342209073&fm=21&gp=0.jpg",
-            "http://img5.imgtn.bdimg.com/it/u=2508119901,2102413332&fm=21&gp=0.jpg",
-            "http://img1.imgtn.bdimg.com/it/u=997008680,2748412799&fm=21&gp=0.jpg",
-            "http://img2.imgtn.bdimg.com/it/u=4248184023,1285925337&fm=21&gp=0.jpg",
-            "http://img0.imgtn.bdimg.com/it/u=3488207672,3352446836&fm=21&gp=0.jpg",
-            "http://img2.imgtn.bdimg.com/it/u=682499833,287859835&fm=21&gp=0.jpg"
+            "http://img4.imgtn.bdimg.com/it/u=1022049122,41854544&fm=21&gp=0.jpg",
+            "http://img3.imgtn.bdimg.com/it/u=8705059,4082837378&fm=21&gp=0.jpg",
+            "http://img2.imgtn.bdimg.com/it/u=3412652926,25532554&fm=21&gp=0.jpg",
+            "http://img3.imgtn.bdimg.com/it/u=2958275000,1554317675&fm=21&gp=0.jpg",
+            "http://img4.imgtn.bdimg.com/it/u=412942216,817709280&fm=21&gp=0.jpg",
+            "http://img0.imgtn.bdimg.com/it/u=716273398,2168696384&fm=21&gp=0.jpg",
+            "http://img0.imgtn.bdimg.com/it/u=2198987318,312089596&fm=21&gp=0.jpg",
+            "http://img1.imgtn.bdimg.com/it/u=3401986487,473287832&fm=21&gp=0.jpg",
+            "http://img3.imgtn.bdimg.com/it/u=2828624972,3235104617&fm=21&gp=0.jpg",
+            "http://img2.imgtn.bdimg.com/it/u=883217823,3187734851&fm=21&gp=0.jpg",
+            "http://img3.imgtn.bdimg.com/it/u=2303826914,3127031927&fm=21&gp=0.jpg",
+            "http://img5.imgtn.bdimg.com/it/u=4157184090,3736233525&fm=21&gp=0.jpg",
+            "http://img3.imgtn.bdimg.com/it/u=2152523337,1056902580&fm=21&gp=0.jpg",
+            "http://img5.imgtn.bdimg.com/it/u=2772452556,2752596537&fm=21&gp=0.jpg"
     };
 
     HeaderWrapper headerWrapper;
@@ -48,6 +57,7 @@ public class MainActivity extends AppCompatActivity {
         shadowHeightPx = getResources().getDimensionPixelSize(R.dimen.shadowHeight);
         headerWrapper = new HeaderWrapper();
         headerWrapper.init(this);
+        headerWrapper.gone();
         headerWrapper.itemHeaderView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -145,18 +155,28 @@ public class MainActivity extends AppCompatActivity {
             OverlapImageHelper.addImageIntoViewGroup(
                     holder.itemView.getContext(),
                     holder.iconLayout,
-                    16,
-                    60,
+                    8,
+                    42,
                     position % 5 + 1,
                     new OverlapImageHelper.ImageProcessor() {
                         @Override
                         public void process(SimpleDraweeView imageView, int position) {
-                            loadImg(imageView, urls[position]);
+                            if (position == 4) {
+                                Uri uri = new Uri.Builder()
+                                        .scheme(UriUtil.LOCAL_RESOURCE_SCHEME) // "res"
+                                        .path(String.valueOf(R.drawable.ic_more_horiz_blue_700_24dp))
+                                        .build();
+                                imageView.setImageURI(uri);
+                            } else {
+                                int img = (int) (Math.random() * urls.length);
+                                loadImg(imageView, urls[img]);
+                            }
                         }
                     }
             );
 
             loadImg(holder.headerIcon, urls[position]);
+            loadImg(holder.image, urls[position]);
             holder.headerText.setText(urls[position]);
         }
 
@@ -170,6 +190,7 @@ public class MainActivity extends AppCompatActivity {
 
         FrameLayout iconLayout = null;
         SimpleDraweeView headerIcon;
+        SimpleDraweeView image;
         TextView headerText;
 
         public ViewHolder(ViewGroup recyclerView) {
@@ -177,6 +198,7 @@ public class MainActivity extends AppCompatActivity {
             iconLayout = (FrameLayout) itemView.findViewById(R.id.iconLayout);
             headerIcon = (SimpleDraweeView) itemView.findViewById(R.id.headerIcon);
             headerText = (TextView) itemView.findViewById(R.id.headerText);
+            image = (SimpleDraweeView) itemView.findViewById(R.id.itemImg);
         }
     }
 

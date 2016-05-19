@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="#EEE"
@@ -9,22 +10,23 @@
         android:id="@+id/itemHeader"
         layout="@layout/item_header" />
 
-    <View
+    <com.facebook.drawee.view.SimpleDraweeView
+        android:id="@+id/itemImg"
         android:layout_width="match_parent"
         android:layout_height="300dp"
-        android:background="#fac" />
+        app:placeholderImage="@mipmap/ic_launcher" />
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center_vertical"
         android:orientation="horizontal"
-        android:padding="16dp">
+        android:padding="12dp">
 
         <FrameLayout
             android:id="@+id/iconLayout"
             android:layout_width="wrap_content"
-            android:layout_height="60dp"
+            android:layout_height="42dp"
             android:orientation="horizontal" />
 
         <TextView
