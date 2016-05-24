@@ -43,7 +43,7 @@ public class OverlapImageHelper {
     }
 
 
-    interface ImageProcessor {
+    public interface ImageProcessor {
         void process(SimpleDraweeView imageView, int position);
     }
 }
