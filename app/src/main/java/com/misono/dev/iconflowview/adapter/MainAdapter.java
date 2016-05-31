@@ -88,6 +88,34 @@ public class MainAdapter extends RecyclerView.Adapter<MainAdapter.ViewHolder> {
             subRecycler = (RecyclerView) itemView.findViewById(R.id.subRecycler);
             subRecycler.setLayoutManager(new LinearLayoutManager(recyclerView.getContext(), LinearLayoutManager.HORIZONTAL, false));
             subRecycler.setAdapter(new SubAdapter(subItemClickListener));
+
+            subRecycler.addOnScrollListener(new RecyclerView.OnScrollListener() {
+                int dx;
+
+                @Override
+                public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
+                    super.onScrollStateChanged(recyclerView, newState);
+                    Log.v("TAG", newState + "+ newState");
+                    if (newState != 0) {
+                        int itemLeft = (recyclerView == null || recyclerView.getChildCount() == 0) ? 0 : recyclerView.getChildAt(0).getLeft();
+
+                        if (dx > 0) {
+                            // scroll Right
+
+                        } else {
+                            // scroll Left
+
+                        }
+                    }
+//                    subRecycler.smoothScrollToPosition();
+                }
+
+                @Override
+                public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+                    super.onScrolled(recyclerView, dx, dy);
+                    this.dx = dx;
+                }
+            });
             itemView.setOnClickListener(itemClickListener);
         }
     }

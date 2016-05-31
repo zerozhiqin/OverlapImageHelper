@@ -10,6 +10,8 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
+import android.widget.FrameLayout;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.facebook.drawee.backends.pipeline.Fresco;
@@ -48,6 +50,8 @@ public class MainActivity extends AppCompatActivity {
     RecyclerView recyclerView;
     LinearLayoutManager linearLayoutManager;
     SwipeRefreshLayout swipeRefresh;
+
+    ImageView loadingHeader;
 //    int shadowHeightPx;
 
     @Override
@@ -55,7 +59,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         Fresco.initialize(this);
         setContentView(R.layout.activity_main);
-
+        loadingHeader = (ImageView) findViewById(R.id.loadingHeader);
 //        shadowHeightPx = getResources().getDimensionPixelSize(R.dimen.shadowHeight);
         headerWrapper = new HeaderWrapper();
         headerWrapper.init(this);
@@ -128,7 +132,8 @@ public class MainActivity extends AppCompatActivity {
             int top = firstView.getTop();
             int offset = firstViewHeight - headerWrapper.height() - 0;
             int headerTop = Math.min(0, top + offset);
-            headerWrapper.move(headerTop);
+            Log.v("recyclerView.getTop()", "recyclerView.getTop()" + recyclerView.getTop());
+            headerWrapper.move(headerTop, recyclerView.getTop());
         }
     };
 
@@ -137,10 +142,12 @@ public class MainActivity extends AppCompatActivity {
         View itemHeaderView;
         SimpleDraweeView headerImageView;
         TextView headerTextView;
+        FrameLayout headerParent;
         int currentFirstVisibleItem;
 
         public void init(Activity activity) {
             itemHeaderView = activity.findViewById(R.id.itemHeader);
+            headerParent = (FrameLayout) activity.findViewById(R.id.headerParent);
             headerImageView = (SimpleDraweeView) itemHeaderView.findViewById(R.id.headerIcon);
             headerTextView = (TextView) itemHeaderView.findViewById(R.id.headerText);
             currentFirstVisibleItem = RecyclerView.NO_POSITION;
@@ -160,8 +167,9 @@ public class MainActivity extends AppCompatActivity {
             itemHeaderView.setVisibility(View.VISIBLE);
         }
 
-        public void move(int top) {
+        public void move(int top, int marginTop) {
             ViewCompat.setTranslationY(itemHeaderView, top);
+            ViewCompat.setTranslationY(headerParent, marginTop);
         }
 
         public int height() {
@@ -178,6 +186,12 @@ public class MainActivity extends AppCompatActivity {
         public void onClick(View v) {
             int position = (int) v.getTag(R.id.tag_item_position);
             Log.v(TAG, "item position : " + position);
+            if (loadingHeader.getVisibility() == View.GONE) {
+                loadingHeader.setVisibility(View.VISIBLE);
+            } else {
+                loadingHeader.setVisibility(View.GONE);
+            }
+
         }
     };
 
