@@ -59,6 +59,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         Fresco.initialize(this);
         setContentView(R.layout.activity_main);
+
         loadingHeader = (ImageView) findViewById(R.id.loadingHeader);
 //        shadowHeightPx = getResources().getDimensionPixelSize(R.dimen.shadowHeight);
         headerWrapper = new HeaderWrapper();
