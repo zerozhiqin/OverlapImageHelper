@@ -8,6 +8,9 @@
         <item name="colorAccent">@color/colorAccent</item>
     </style>
 
+    <style name="AppTheme.Trans">
+    </style>
+
 
     <declare-styleable name="OverlapLayout">
         <attr name="overlap_size" format="dimension" />
